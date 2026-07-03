@@ -55,6 +55,9 @@ app.use(apiLimiter);
 
 app.use('/uploads', express.static(path.resolve(__dirname, '..', env.uploadDir)));
 
+const frontendDist = path.resolve(__dirname, '../../frontend/dist');
+app.use(express.static(frontendDist));
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
   explorer: true,
   customCss: '.swagger-ui .topbar { display: none }',
@@ -78,8 +81,12 @@ app.get('/api-docs.json', (_req, res) => {
 
 app.use('/api/v1', routes);
 
-app.all('*', (req, _res, next) => {
+app.all('/api/*', (req, _res, next) => {
   next(new AppError(`Route ${req.originalUrl} not found`, 404));
+});
+
+app.get('*', (_req, res) => {
+  res.sendFile(path.join(frontendDist, 'index.html'));
 });
 
 app.use(errorHandler);
