@@ -3,7 +3,7 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   X, Home, BookOpen, Users, Info, Newspaper, Mail, GraduationCap,
-  LogIn, UserPlus, LogOut, User, Sparkles, LayoutDashboard,
+  LogIn, UserPlus, LogOut, User, Sparkles, LayoutDashboard, Heart,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -120,6 +120,24 @@ export default function MobileNav({ open, onClose }) {
                       <LayoutDashboard className="w-4 h-4" />
                       Dashboard
                     </Link>
+                    {user?.role === 'student' && (
+                      <>
+                        <Link
+                          to="/dashboard/student/courses"
+                          className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+                        >
+                          <BookOpen className="w-4 h-4" />
+                          My Learning
+                        </Link>
+                        <Link
+                          to="/dashboard/student/wishlist"
+                          className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+                        >
+                          <Heart className="w-4 h-4" />
+                          Wishlist
+                        </Link>
+                      </>
+                    )}
                     <Link
                       to="/dashboard/profile"
                       className="flex items-center gap-3 px-3 py-2.5 rounded-md text-sm font-medium text-foreground hover:bg-muted/50 transition-colors"

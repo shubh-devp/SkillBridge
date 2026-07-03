@@ -32,7 +32,7 @@ function getQuickLinks(user) {
     { label: 'Dashboard', icon: LayoutDashboard, path: getDashboardPath(user) },
   ];
   if (user?.role === 'student') {
-    links.push({ label: 'My Learning', icon: BookOpen, path: '/dashboard/student' });
+    links.push({ label: 'My Learning', icon: BookOpen, path: '/dashboard/student/courses' });
     links.push({ label: 'Wishlist', icon: Heart, path: '/dashboard/student/wishlist' });
   }
   links.push({ label: 'Profile', icon: User, path: '/dashboard/profile' });

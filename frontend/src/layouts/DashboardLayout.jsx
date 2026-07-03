@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { Outlet, useLocation, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Menu, Bell, Search, X, ChevronDown, LogOut, User, Settings, HelpCircle,
+  Menu, Bell, Search, X, ChevronDown, LogOut, User, Settings,
 } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '@/store/auth-context';
@@ -20,6 +20,7 @@ export default function DashboardLayout() {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [notifOpen, setNotifOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const [dashSearch, setDashSearch] = useState('');
   const { user, logout } = useAuth();
   const location = useLocation();
   const profileRef = useRef(null);
@@ -66,6 +67,13 @@ export default function DashboardLayout() {
                 <input
                   type="text"
                   placeholder="Search..."
+                  value={dashSearch}
+                  onChange={(e) => setDashSearch(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' && dashSearch.trim()) {
+                      window.location.href = `/courses?q=${encodeURIComponent(dashSearch.trim())}`;
+                    }
+                  }}
                   className="w-64 lg:w-80 pl-9 pr-3 py-1.5 text-sm bg-muted/50 border border-border/60 rounded-lg text-foreground placeholder:text-muted-foreground/40 focus:outline-none focus:ring-1 focus:ring-primary/30 focus:border-primary/50 transition-all"
                   aria-label="Search dashboard"
                 />
@@ -107,7 +115,7 @@ export default function DashboardLayout() {
                           </button>
                         ))}
                       </div>
-                      <Link to="/dashboard/notifications" className="block text-center text-sm text-primary font-medium py-2.5 border-t border-border/60 hover:bg-muted/30 transition-colors">
+                      <Link to="/dashboard/notifications" className="block text-center text-sm text-primary font-medium py-2.5 border-t border-border/60 hover:bg-muted/30 transition-colors" onClick={() => setNotifOpen(false)}>
                         View all
                       </Link>
                     </motion.div>
@@ -155,10 +163,7 @@ export default function DashboardLayout() {
                         <Settings className="w-4 h-4 text-muted-foreground" />
                         Settings
                       </Link>
-                      <Link to="/help" onClick={() => setProfileOpen(false)} className="flex items-center gap-3 px-4 py-2 text-sm text-foreground hover:bg-muted/50 transition-colors">
-                        <HelpCircle className="w-4 h-4 text-muted-foreground" />
-                        Help Center
-                      </Link>
+
                       <hr className="my-1 mx-3 border-border/60" />
                       <button onClick={() => { logout(); setProfileOpen(false); }} className="flex items-center gap-3 w-full px-4 py-2 text-sm text-destructive hover:bg-destructive/5 transition-colors">
                         <LogOut className="w-4 h-4" />

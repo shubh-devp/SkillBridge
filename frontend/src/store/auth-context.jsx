@@ -15,6 +15,12 @@ function getDashboardPath(user) {
   return roleDashboardMap[user?.role] || '/dashboard/student';
 }
 
+function needsOnboarding(user) {
+  if (!user) return false;
+  const completed = localStorage.getItem(`onboarding_${user.id || user._id}`);
+  return completed !== 'true';
+}
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -42,7 +48,11 @@ export function AuthProvider({ children }) {
       const u = data.user ?? data;
       setUser(u);
       toast.success('Welcome back!');
-      navigate(getDashboardPath(u), { replace: true });
+      if (needsOnboarding(u)) {
+        navigate('/onboarding', { replace: true });
+      } else {
+        navigate(getDashboardPath(u), { replace: true });
+      }
     },
     [navigate],
   );
@@ -53,7 +63,7 @@ export function AuthProvider({ children }) {
       const u = data.user ?? data;
       setUser(u);
       toast.success('Account created successfully!');
-      navigate(getDashboardPath(u), { replace: true });
+      navigate('/onboarding', { replace: true });
     },
     [navigate],
   );

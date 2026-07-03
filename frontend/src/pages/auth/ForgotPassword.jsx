@@ -6,15 +6,21 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { forgotPassword } from '@/services/auth.service';
 import toast from 'react-hot-toast';
+import { cn } from '@/lib/utils';
 
 export default function ForgotPassword() {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
 
+  const [emailError, setEmailError] = useState('');
+
   const onSubmit = async (e) => {
     e.preventDefault();
-    if (!email) return;
+    setEmailError('');
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) { setEmailError('Email is required'); return; }
+    if (!emailRegex.test(email)) { setEmailError('Please enter a valid email'); return; }
     setIsSubmitting(true);
     try {
       await forgotPassword(email);
@@ -65,14 +71,15 @@ export default function ForgotPassword() {
             <Input
               id="email"
               type="email"
-              className="pl-9"
+              className={cn('pl-9', emailError && 'border-destructive')}
               placeholder="you@example.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => { setEmail(e.target.value); setEmailError(''); }}
               required
               autoComplete="email"
             />
           </div>
+          {emailError && <p className="text-xs text-destructive">{emailError}</p>}
         </div>
 
         <Button type="submit" className="w-full" isLoading={isSubmitting} disabled={isSubmitting}>
