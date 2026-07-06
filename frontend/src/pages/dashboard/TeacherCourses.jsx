@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Search, Plus, Star, Users, Pencil, Eye, Filter, DollarSign, GraduationCap } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { Search, Plus, Star, Users, Pencil, Eye, DollarSign, GraduationCap } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,13 +10,14 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { useAuth } from '@/store/auth-context';
 
 const courses = [
-  { id: 1, title: 'IIT-JEE Advanced Physics 2026', students: 128, rating: 4.8, revenue: '₹4,82,000', status: 'published', lectures: 48, category: 'Engineering' },
-  { id: 2, title: 'NEET Biology Crash Course', students: 94, rating: 4.6, revenue: '₹2,35,000', status: 'published', lectures: 36, category: 'Medical' },
-  { id: 3, title: 'CBSE Class 12 Mathematics', students: 156, rating: 4.9, revenue: '₹3,12,000', status: 'published', lectures: 42, category: 'Board Exams' },
-  { id: 4, title: 'JEE Advanced Chemistry - Organic', students: 67, rating: 4.7, revenue: '₹1,89,000', status: 'draft', lectures: 24, category: 'Engineering' },
+  { id: 1, slug: 'jee-advanced-physics-2026', title: 'IIT-JEE Advanced Physics 2026', students: 128, rating: 4.8, revenue: '₹4,82,000', status: 'published', lectures: 48, category: 'Engineering' },
+  { id: 2, slug: 'neet-ug-biology-masterclass', title: 'NEET Biology Crash Course', students: 94, rating: 4.6, revenue: '₹2,35,000', status: 'published', lectures: 36, category: 'Medical' },
+  { id: 3, slug: 'jee-main-mathematics-intensive', title: 'CBSE Class 12 Mathematics', students: 156, rating: 4.9, revenue: '₹3,12,000', status: 'published', lectures: 42, category: 'Board Exams' },
+  { id: 4, slug: 'jee-advanced-chemistry', title: 'JEE Advanced Chemistry - Organic', students: 67, rating: 4.7, revenue: '₹1,89,000', status: 'draft', lectures: 24, category: 'Engineering' },
 ];
 
 export default function TeacherCourses() {
+  const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [tab, setTab] = useState('all');
   const filtered = courses.filter(c => {
@@ -36,7 +38,7 @@ export default function TeacherCourses() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground/40" />
             <Input placeholder="Search..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9 h-9 w-48 text-sm" />
           </div>
-          <Button size="sm" className="h-9 gap-1.5 text-xs">
+          <Button size="sm" className="h-9 gap-1.5 text-xs" onClick={() => toast.success('Course creation form coming soon')}>
             <Plus className="w-3.5 h-3.5" /> New Course
           </Button>
         </div>
@@ -74,8 +76,8 @@ export default function TeacherCourses() {
                     </div>
                     <p className="text-xs text-muted-foreground/70">{course.lectures} lectures</p>
                     <div className="flex gap-2">
-                      <Button size="sm" variant="outline" className="flex-1 h-7 text-xs gap-1"><Pencil className="w-3 h-3" /> Edit</Button>
-                      <Button size="sm" className="flex-1 h-7 text-xs gap-1"><Eye className="w-3 h-3" /> Preview</Button>
+                      <Button size="sm" variant="outline" className="flex-1 h-7 text-xs gap-1" onClick={() => toast.success('Edit mode coming soon')}><Pencil className="w-3 h-3" /> Edit</Button>
+                      <Button size="sm" className="flex-1 h-7 text-xs gap-1" onClick={() => navigate(`/courses/${course.slug}`)}><Eye className="w-3 h-3" /> Preview</Button>
                     </div>
                   </div>
                 </Card>

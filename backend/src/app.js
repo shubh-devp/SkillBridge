@@ -61,13 +61,13 @@ app.use(express.static(frontendDist));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
   explorer: true,
   customCss: '.swagger-ui .topbar { display: none }',
-  customSiteTitle: 'EduServe API Documentation',
+  customSiteTitle: 'SkillBridge API Documentation',
 }));
 
 app.get('/api/health', (_req, res) => {
   res.json({
     success: true,
-    message: 'EduServe API is running',
+    message: 'SkillBridge API is running',
     environment: env.nodeEnv,
     dbConnected: isDBConnected,
     timestamp: new Date().toISOString(),
@@ -107,7 +107,7 @@ process.on('SIGTERM', () => {
 });
 
 const server = app.listen(env.port, () => {
-  logger.info(`EduServe API server running on port ${env.port} in ${env.nodeEnv} mode`);
+  logger.info(`SkillBridge API server running on port ${env.port} in ${env.nodeEnv} mode`);
   logger.info(`API Documentation: http://localhost:${env.port}/api-docs`);
   logger.info(`Health Check: http://localhost:${env.port}/api/health`);
 });

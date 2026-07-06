@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { Plus, Calendar, Clock, BarChart3, Users, Eye, Pencil } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -24,7 +25,7 @@ export default function TeacherTests() {
           <h1 className="text-xl font-bold text-foreground">Tests & Assessments</h1>
           <p className="text-sm text-muted-foreground/70 mt-0.5">{tests.length} total tests</p>
         </div>
-        <Button size="sm" className="h-9 gap-1.5 text-xs"><Plus className="w-3.5 h-3.5" /> Create Test</Button>
+        <Button size="sm" className="h-9 gap-1.5 text-xs" onClick={() => toast.success('Test creation form coming soon')}><Plus className="w-3.5 h-3.5" /> Create Test</Button>
       </div>
 
       <Tabs value={tab} onValueChange={setTab}>
@@ -60,8 +61,8 @@ export default function TeacherTests() {
                   </div>
                 </div>
                 <div className="flex gap-1.5 shrink-0">
-                  <Button size="sm" variant="outline" className="h-8 w-8 p-0"><Eye className="w-3.5 h-3.5" /></Button>
-                  <Button size="sm" variant="outline" className="h-8 w-8 p-0"><Pencil className="w-3.5 h-3.5" /></Button>
+                  <Button size="sm" variant="outline" className="h-8 w-8 p-0" onClick={() => toast.success('Opening test details...')}><Eye className="w-3.5 h-3.5" /></Button>
+                  <Button size="sm" variant="outline" className="h-8 w-8 p-0" onClick={() => toast.success('Edit mode coming soon')}><Pencil className="w-3.5 h-3.5" /></Button>
                 </div>
               </div>
             </Card>

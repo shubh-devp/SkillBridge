@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import {
   Star, Users, BookOpen, GraduationCap, Clock, Award,
@@ -43,7 +44,7 @@ Dr. Kumar believes that Physics is not just about formulas and calculations — 
     'Gold Medalist — IIT Delhi Physics Olympiad',
   ],
   specialization: ['Mechanics', 'Electrodynamics', 'Quantum Physics', 'Optics', 'Thermodynamics', 'Mathematical Physics'],
-  social: { youtube: '#', instagram: '#', twitter: '#' },
+  social: { youtube: 'https://youtube.com/@skillbridge', instagram: 'https://instagram.com/skillbridge', twitter: 'https://twitter.com/skillbridge' },
   coursesTaught: [
     { id: 1, slug: 'jee-advanced-physics-2026', title: 'JEE Advanced 2026: Complete Physics', category: 'JEE Advanced', rating: 4.8, price: 14999, enrolled: 8450, gradient: 'from-blue-500 to-cyan-500' },
     { id: 8, slug: 'neet-physics', title: 'NEET UG: Physics Fundamentals', category: 'NEET UG', rating: 4.6, price: 8999, enrolled: 6300, gradient: 'from-green-500 to-emerald-500' },
@@ -175,7 +176,7 @@ export default function TeacherDetails() {
               </div>
 
               <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
-                <Button className="bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/20 rounded-xl gap-2">
+                <Button className="bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/20 rounded-xl gap-2" onClick={() => toast.success('Message feature coming soon')}>
                   <Mail className="w-4 h-4" />
                   Contact Teacher
                 </Button>

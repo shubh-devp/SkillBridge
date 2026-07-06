@@ -19,11 +19,11 @@ const contactInfo = [
 ];
 
 const socialLinks = [
-  { icon: Youtube, href: '#', label: 'YouTube' },
-  { icon: Instagram, href: '#', label: 'Instagram' },
-  { icon: Twitter, href: '#', label: 'Twitter/X' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn' },
-  { icon: Facebook, href: '#', label: 'Facebook' },
+  { icon: Youtube, href: 'https://youtube.com/@skillbridge', label: 'YouTube' },
+  { icon: Instagram, href: 'https://instagram.com/skillbridge', label: 'Instagram' },
+  { icon: Twitter, href: 'https://twitter.com/skillbridge', label: 'Twitter/X' },
+  { icon: Linkedin, href: 'https://linkedin.com/company/skillbridge', label: 'LinkedIn' },
+  { icon: Facebook, href: 'https://facebook.com/skillbridge', label: 'Facebook' },
 ];
 
 export default function Footer() {

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { Heart, Star, Clock, BookOpen, ShoppingCart, Trash2, GraduationCap } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -14,9 +15,10 @@ const wishlistItems = [
 ];
 
 export default function StudentWishlist() {
+  const navigate = useNavigate();
   const [items, setItems] = useState(wishlistItems);
 
-  const removeItem = (id) => setItems(items.filter(i => i.id !== id));
+  const removeItem = (id) => { setItems(items.filter(i => i.id !== id)); toast.success('Removed from wishlist'); };
 
   return (
     <div className="pb-8 max-w-7xl mx-auto space-y-6">
@@ -63,7 +65,7 @@ export default function StudentWishlist() {
                     <Button size="sm" variant="outline" className="h-8 w-8 p-0" onClick={() => removeItem(item.id)}>
                       <Trash2 className="w-3.5 h-3.5 text-muted-foreground" />
                     </Button>
-                    <Button size="sm" className="h-8 text-xs gap-1">
+                    <Button size="sm" className="h-8 text-xs gap-1" onClick={() => { toast.success('Enrolled successfully!'); navigate('/dashboard/student/courses'); }}>
                       <ShoppingCart className="w-3 h-3" /> Enroll
                     </Button>
                   </div>

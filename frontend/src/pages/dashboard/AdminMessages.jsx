@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { Search, Mail, MessageSquare, Send, Paperclip, Star, Trash2, Inbox } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,9 +11,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';
 
 const conversations = [
-  { id: 1, name: 'Dr. Vikram Rathore', email: 'vikram.rathore@eduserve.in', lastMsg: 'I need to update the course syllabus for the new batch', time: '5m ago', unread: 2, initials: 'VR', online: true },
+  { id: 1, name: 'Dr. Vikram Rathore', email: 'vikram.rathore@skillbridge.in', lastMsg: 'I need to update the course syllabus for the new batch', time: '5m ago', unread: 2, initials: 'VR', online: true },
   { id: 2, name: 'Rohit Sharma', email: 'rohit.sharma@example.com', lastMsg: 'When will the next mock test be available?', time: '2h ago', unread: 0, initials: 'RS', online: false },
-  { id: 3, name: 'Prof. Sunita Mehta', email: 'sunita.mehta@eduserve.in', lastMsg: 'The new NEET material is ready for review', time: '1d ago', unread: 1, initials: 'SM', online: true },
+  { id: 3, name: 'Prof. Sunita Mehta', email: 'sunita.mehta@skillbridge.in', lastMsg: 'The new NEET material is ready for review', time: '1d ago', unread: 1, initials: 'SM', online: true },
   { id: 4, name: 'Ananya Gupta', email: 'ananya.gupta@example.com', lastMsg: 'Thank you for the scholarship information', time: '3d ago', unread: 0, initials: 'AG', online: false },
 ];
 
@@ -27,7 +28,7 @@ export default function AdminMessages() {
           <h1 className="text-xl font-bold text-foreground">Messages</h1>
           <p className="text-sm text-muted-foreground/70 mt-0.5">Platform communications</p>
         </div>
-        <Button size="sm" className="h-9 gap-1.5 text-xs"><Send className="w-3.5 h-3.5" /> Compose</Button>
+        <Button size="sm" className="h-9 gap-1.5 text-xs" onClick={() => toast.success('Compose message feature coming soon')}><Send className="w-3.5 h-3.5" /> Compose</Button>
       </div>
 
       <Card className="flex h-[600px] overflow-hidden">
@@ -35,7 +36,7 @@ export default function AdminMessages() {
           <div className="p-3 border-b border-border/60">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground/40" />
-              <Input placeholder="Search messages..." className="pl-9 h-9 text-sm" />
+              <Input placeholder="Search messages..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9 h-9 text-sm" />
             </div>
           </div>
           <div className="flex-1 overflow-y-auto">

@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import {
   Search, Star, Users, BookOpen, GraduationCap, ChevronRight, Check,
@@ -52,6 +53,7 @@ function FadeUp({ children, delay = 0, className }) {
 /* ───────── Hero ───────── */
 function Hero() {
   const [goal, setGoal] = useState('');
+  const navigate = useNavigate();
   const goals = ['JEE Advanced', 'NEET UG', 'JEE Main', 'CBSE', 'Programming'];
 
   return (
@@ -101,7 +103,7 @@ function Hero() {
                   className="pl-10 h-11 bg-surface border-border rounded-lg text-sm"
                 />
               </div>
-              <Button size="lg" className="h-11 px-6 text-sm">
+              <Button size="lg" className="h-11 px-6 text-sm" onClick={() => navigate(goal ? `/courses?q=${encodeURIComponent(goal)}` : '/courses')}>
                 <Search className="w-4 h-4 mr-2" />
                 Explore
               </Button>
@@ -116,7 +118,7 @@ function Hero() {
               {goals.map((g) => (
                 <button
                   key={g}
-                  onClick={() => setGoal(g)}
+                  onClick={() => { setGoal(g); navigate(`/courses?category=${encodeURIComponent(g)}`); }}
                   className={cn(
                     'px-3.5 py-1.5 rounded-md text-xs font-medium border transition-colors',
                     goal === g
@@ -195,7 +197,7 @@ function Hero() {
                   <div className="flex items-center gap-3 text-xs text-muted-foreground">
                     <span className="flex items-center gap-1"><Users className="w-3 h-3" /> 1,240 watching</span>
                   </div>
-                  <Button size="sm" className="h-8 text-xs gap-1.5">
+                  <Button size="sm" className="h-8 text-xs gap-1.5" onClick={() => navigate('/courses/jee-advanced-physics-2026')}>
                     <Play className="w-3 h-3" />
                     Join Live
                   </Button>
@@ -204,14 +206,14 @@ function Hero() {
 
               <div className="mt-4 grid grid-cols-3 gap-3">
                 {[
-                  { value: '50K+', label: 'Students', icon: Users },
-                  { value: '500+', label: 'Courses', icon: BookOpen },
-                  { value: '95%', label: 'Success Rate', icon: TrendingUp },
+                  { value: '50K+', label: 'Students', icon: Users, to: '/teachers' },
+                  { value: '500+', label: 'Courses', icon: BookOpen, to: '/courses' },
+                  { value: '95%', label: 'Success Rate', icon: TrendingUp, to: '/about' },
                 ].map((stat) => (
-                  <div key={stat.label} className="rounded-lg border border-border/50 bg-surface p-3 text-center">
+                  <button key={stat.label} onClick={() => navigate(stat.to)} className="w-full rounded-lg border border-border/50 bg-surface p-3 text-center hover:border-border hover:shadow-sm transition-all">
                     <p className="text-lg font-bold text-foreground">{stat.value}</p>
                     <p className="text-xs text-muted-foreground">{stat.label}</p>
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>
@@ -291,24 +293,25 @@ function HowItWorks() {
 
 /* ──────── Stats ──────── */
 function Stats() {
+  const navigate = useNavigate();
   const stats = [
-    { value: 50000, suffix: '+', label: 'Students Enrolled', icon: Users },
-    { value: 500, suffix: '+', label: 'Expert-Led Courses', icon: BookOpen },
-    { value: 200, suffix: '+', label: 'Top Educators', icon: GraduationCap },
-    { value: 95, suffix: '%', label: 'Success Rate', icon: TrendingUp },
+    { value: 50000, suffix: '+', label: 'Students Enrolled', icon: Users, to: '/teachers' },
+    { value: 500, suffix: '+', label: 'Expert-Led Courses', icon: BookOpen, to: '/courses' },
+    { value: 200, suffix: '+', label: 'Top Educators', icon: GraduationCap, to: '/teachers' },
+    { value: 95, suffix: '%', label: 'Success Rate', icon: TrendingUp, to: '/about' },
   ];
   return (
     <Section bg="muted">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {stats.map((s, i) => (
           <FadeUp key={s.label} delay={i * 0.08}>
-            <div className="rounded-xl border border-border/60 bg-surface p-5 text-center">
+            <button onClick={() => navigate(s.to)} className="w-full rounded-xl border border-border/60 bg-surface p-5 text-center hover:border-border hover:shadow-sm transition-all">
               <s.icon className="w-5 h-5 text-primary mx-auto mb-3" />
               <p className="text-2xl md:text-3xl font-bold text-foreground">
                 <AnimatedCounter end={s.value} suffix={s.suffix} />
               </p>
               <p className="text-xs text-muted-foreground mt-1">{s.label}</p>
-            </div>
+            </button>
           </FadeUp>
         ))}
       </div>
@@ -318,10 +321,10 @@ function Stats() {
 
 /* ──────── Featured Courses ──────── */
 const coursesData = [
-  { id: 1, title: 'JEE Advanced 2026: Complete Physics', teacher: 'Dr. Rajesh Kumar', category: 'JEE Advanced', rating: 4.8, reviews: 1240, enrolled: 8450, price: 14999, original: 29999, duration: '12 months', level: 'Advanced', badge: 'Popular' },
-  { id: 2, title: 'NEET UG 2026: Biology Masterclass', teacher: 'Dr. Priya Sharma', category: 'NEET UG', rating: 4.9, reviews: 980, enrolled: 7200, price: 12999, original: 24999, duration: '10 months', level: 'Advanced', badge: 'Top Rated' },
-  { id: 3, title: 'JEE Main 2026: Mathematics Intensive', teacher: 'Prof. Amit Verma', category: 'JEE Main', rating: 4.7, reviews: 1560, enrolled: 12300, price: 9999, original: 19999, duration: '8 months', level: 'Intermediate', badge: null },
-  { id: 4, title: 'Python for Data Science & AI', teacher: 'Mr. Arjun Nair', category: 'Programming', rating: 4.8, reviews: 2100, enrolled: 15200, price: 8499, original: 16999, duration: '6 months', level: 'Beginner', badge: 'New' },
+  { id: 1, slug: 'jee-advanced-physics-2026', title: 'JEE Advanced 2026: Complete Physics', teacher: 'Dr. Rajesh Kumar', category: 'JEE Advanced', rating: 4.8, reviews: 1240, enrolled: 8450, price: 14999, original: 29999, duration: '12 months', level: 'Advanced', badge: 'Popular' },
+  { id: 2, slug: 'neet-ug-biology-masterclass', title: 'NEET UG 2026: Biology Masterclass', teacher: 'Dr. Priya Sharma', category: 'NEET UG', rating: 4.9, reviews: 980, enrolled: 7200, price: 12999, original: 24999, duration: '10 months', level: 'Advanced', badge: 'Top Rated' },
+  { id: 3, slug: 'jee-main-mathematics-intensive', title: 'JEE Main 2026: Mathematics Intensive', teacher: 'Prof. Amit Verma', category: 'JEE Main', rating: 4.7, reviews: 1560, enrolled: 12300, price: 9999, original: 19999, duration: '8 months', level: 'Intermediate', badge: null },
+  { id: 4, slug: 'python-data-science-ai', title: 'Python for Data Science & AI', teacher: 'Mr. Arjun Nair', category: 'Programming', rating: 4.8, reviews: 2100, enrolled: 15200, price: 8499, original: 16999, duration: '6 months', level: 'Beginner', badge: 'New' },
 ];
 
 function FeaturedCourses() {
@@ -342,7 +345,7 @@ function FeaturedCourses() {
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
         {coursesData.map((course, i) => (
           <FadeUp key={course.id} delay={i * 0.08}>
-            <Link to={`/courses/${course.slug || course.id}`} className="group block h-full">
+            <Link to={`/courses/${course.slug}`} className="group block h-full">
               <div className="rounded-xl border border-border/60 bg-surface p-5 h-full hover:border-border hover:shadow-sm transition-all">
                 <div className="flex items-start justify-between mb-3">
                   <Badge variant="secondary" size="sm">{course.category}</Badge>

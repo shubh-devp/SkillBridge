@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 import { Plus, FileText, Calendar, Users, Eye, Pencil } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -24,7 +25,7 @@ export default function TeacherAssignments() {
           <h1 className="text-xl font-bold text-foreground">Assignments</h1>
           <p className="text-sm text-muted-foreground/70 mt-0.5">{assignments.filter(a => a.status === 'active' || a.status === 'grading').length} in progress</p>
         </div>
-        <Button size="sm" className="h-9 gap-1.5 text-xs"><Plus className="w-3.5 h-3.5" /> New Assignment</Button>
+        <Button size="sm" className="h-9 gap-1.5 text-xs" onClick={() => toast.success('New assignment form coming soon')}><Plus className="w-3.5 h-3.5" /> New Assignment</Button>
       </div>
 
       <Tabs value={tab} onValueChange={setTab}>
@@ -63,8 +64,8 @@ export default function TeacherAssignments() {
                   </div>
                 </div>
                 <div className="flex gap-1.5 shrink-0">
-                  <Button size="sm" variant="outline" className="h-8 w-8 p-0"><Eye className="w-3.5 h-3.5" /></Button>
-                  <Button size="sm" variant="outline" className="h-8 w-8 p-0"><Pencil className="w-3.5 h-3.5" /></Button>
+                  <Button size="sm" variant="outline" className="h-8 w-8 p-0" onClick={() => toast.success('Opening submissions...')}><Eye className="w-3.5 h-3.5" /></Button>
+                  <Button size="sm" variant="outline" className="h-8 w-8 p-0" onClick={() => toast.success('Edit mode coming soon')}><Pencil className="w-3.5 h-3.5" /></Button>
                 </div>
               </div>
             </Card>

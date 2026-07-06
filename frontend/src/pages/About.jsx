@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import {
   BookOpen, Users, GraduationCap, TrendingUp, Target, Shield,
   Heart, Lightbulb, Handshake, Rocket, Award, Globe,
@@ -73,6 +74,7 @@ function AnimatedCounter({ end, suffix = '' }) {
 }
 
 export default function About() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
 
   return (
@@ -304,7 +306,7 @@ export default function About() {
               onChange={(e) => setEmail(e.target.value)}
               className="h-12 bg-white/15 border-white/20 text-white placeholder:text-white/50 focus-visible:ring-white/30 rounded-xl"
             />
-            <Button size="lg" className="bg-white text-primary hover:bg-white/90 h-12 px-8 shadow-xl rounded-xl w-full sm:w-auto font-semibold">
+            <Button size="lg" className="bg-white text-primary hover:bg-white/90 h-12 px-8 shadow-xl rounded-xl w-full sm:w-auto font-semibold" onClick={() => { toast.success(email ? 'Thanks for subscribing!' : 'Redirecting...'); navigate(email ? '/' : '/register'); }}>
               Get Started
               <ArrowRight className="ml-2 w-4 h-4" />
             </Button>

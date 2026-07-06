@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { FileText, Calendar, Clock, CheckCircle, AlertCircle, ChevronRight } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -18,6 +20,7 @@ const statusVariants = { pending: 'accent', submitted: 'warning', graded: 'succe
 const statusLabels = { pending: 'Pending', submitted: 'Submitted', graded: 'Graded' };
 
 export default function StudentAssignments() {
+  const navigate = useNavigate();
   const [tab, setTab] = useState('pending');
 
   const filtered = tab === 'all' ? assignments : assignments.filter(a => a.status === tab);
@@ -65,7 +68,7 @@ export default function StudentAssignments() {
                     </div>
                   </div>
                 </div>
-                <Button size="sm" variant={a.status === 'graded' ? 'outline' : 'default'} className="h-8 shrink-0 text-xs">
+                <Button size="sm" variant={a.status === 'graded' ? 'outline' : 'default'} className="h-8 shrink-0 text-xs" onClick={() => toast.success(a.status === 'graded' ? 'Opening feedback...' : a.status === 'submitted' ? 'Opening submission...' : 'Opening submission form...')}>
                   {a.status === 'graded' ? 'View Feedback' : a.status === 'submitted' ? 'View' : 'Submit'}
                 </Button>
               </div>

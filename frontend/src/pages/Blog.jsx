@@ -373,6 +373,7 @@ export default function Blog() {
                         key={tag}
                         variant="secondary"
                         className="cursor-pointer hover:bg-primary hover:text-white transition-colors rounded-lg px-3 py-1.5"
+                        onClick={() => setSelectedCategory(tag)}
                       >
                         {tag}
                       </Badge>

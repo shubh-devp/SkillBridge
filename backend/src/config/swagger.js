@@ -4,12 +4,12 @@ const options = {
   definition: {
     openapi: '3.0.0',
     info: {
-      title: 'EduServe API',
+      title: 'SkillBridge API',
       description: 'Premium Indian EdTech Platform API',
       version: '1.0.0',
       contact: {
-        name: 'EduServe Support',
-        email: 'support@eduserve.in',
+        name: 'SkillBridge Support',
+        email: 'support@skillbridge.in',
       },
     },
     servers: [

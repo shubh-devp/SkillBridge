@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import {
   Users, BookOpen, DollarSign, TrendingUp, Activity,
@@ -81,11 +82,11 @@ const userRoleDistribution = [
 
 const recentUsers = [
   { id: 1, name: 'Rohit Sharma', email: 'rohit.sharma@example.com', role: 'student', status: 'active', joined: '1 Jul 2026', initials: 'RS' },
-  { id: 2, name: 'Dr. Vikram Rathore', email: 'vikram.rathore@eduserve.in', role: 'teacher', status: 'active', joined: '28 Jun 2026', initials: 'VR' },
+  { id: 2, name: 'Dr. Vikram Rathore', email: 'vikram.rathore@skillbridge.in', role: 'teacher', status: 'active', joined: '28 Jun 2026', initials: 'VR' },
   { id: 3, name: 'Priya Mehta', email: 'priya.mehta@example.com', role: 'student', status: 'active', joined: '25 Jun 2026', initials: 'PM' },
   { id: 4, name: 'Ananya Gupta', email: 'ananya.gupta@example.com', role: 'student', status: 'inactive', joined: '20 Jun 2026', initials: 'AG' },
-  { id: 5, name: 'Prof. Sunita Mehta', email: 'sunita.mehta@eduserve.in', role: 'teacher', status: 'active', joined: '15 Jun 2026', initials: 'SM' },
-  { id: 6, name: 'Amit Verma', email: 'amit.verma@eduserve.in', role: 'admin', status: 'active', joined: '10 Jun 2026', initials: 'AV' },
+  { id: 5, name: 'Prof. Sunita Mehta', email: 'sunita.mehta@skillbridge.in', role: 'teacher', status: 'active', joined: '15 Jun 2026', initials: 'SM' },
+  { id: 6, name: 'Amit Verma', email: 'amit.verma@skillbridge.in', role: 'admin', status: 'active', joined: '10 Jun 2026', initials: 'AV' },
 ];
 
 const recentActivities = [
@@ -121,6 +122,7 @@ function ChartTooltip({ active, payload, label, formatter }) {
 
 export default function AdminDashboard() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const adminName = user?.name || 'Admin';
   const greeting = getGreeting();
@@ -184,18 +186,18 @@ export default function AdminDashboard() {
           <h2 className="text-sm font-semibold text-foreground">Platform Overview</h2>
         </div>
         <div className="flex flex-wrap gap-2">
-          <span className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/60 text-xs text-foreground">
+          <button onClick={() => navigate('/dashboard/admin/analytics')} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/60 text-xs text-foreground hover:bg-muted/80 transition-colors">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
             1,950 new enrollments this month
-          </span>
-          <span className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/60 text-xs text-foreground">
+          </button>
+          <button onClick={() => navigate('/dashboard/admin/teachers')} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/60 text-xs text-foreground hover:bg-muted/80 transition-colors">
             <span className="w-2 h-2 rounded-full bg-amber-500" />
             6 pending teacher approvals
-          </span>
-          <span className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/60 text-xs text-foreground">
+          </button>
+          <button onClick={() => navigate('/dashboard/admin/courses')} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/60 text-xs text-foreground hover:bg-muted/80 transition-colors">
             <span className="w-2 h-2 rounded-full bg-primary" />
             3 new course publish requests
-          </span>
+          </button>
         </div>
       </Card>
 
@@ -203,26 +205,31 @@ export default function AdminDashboard() {
         {keyMetrics.map((metric) => {
           const TrendIcon = metric.change >= 0 ? ArrowUp : ArrowDown;
           return (
-            <Card key={metric.label} className="p-4">
-              <div className="flex items-start justify-between mb-3">
-                <p className="text-xs text-muted-foreground uppercase tracking-wider">{metric.label}</p>
-                <div className="p-2 rounded-lg bg-muted">
-                  <metric.icon className="w-4 h-4 text-muted-foreground" />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <p className="text-2xl font-bold text-foreground">
-                  {metric.prefix ? `${metric.prefix}${metric.value.toLocaleString()}` : metric.value.toLocaleString()}
-                </p>
-                <div className="flex items-center gap-2">
-                  <div className={cn('flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold', metric.change >= 0 ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-500')}>
-                    <TrendIcon className="w-2.5 h-2.5" />
-                    <span>{Math.abs(metric.change)}%</span>
+            <button key={metric.label} onClick={() => {
+              const paths = { 'Total Users': '/dashboard/admin/users', 'Active Students': '/dashboard/admin/users', 'Total Revenue': '/dashboard/admin/analytics', 'Total Courses': '/dashboard/admin/courses' };
+              navigate(paths[metric.label]);
+            }} className="w-full text-left">
+              <Card className="p-4 hover:border-primary/30 transition-colors cursor-pointer">
+                <div className="flex items-start justify-between mb-3">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider">{metric.label}</p>
+                  <div className="p-2 rounded-lg bg-muted">
+                    <metric.icon className="w-4 h-4 text-muted-foreground" />
                   </div>
-                  <span className="text-[10px] text-muted-foreground/50">vs last month</span>
                 </div>
-              </div>
-            </Card>
+                <div className="space-y-2">
+                  <p className="text-2xl font-bold text-foreground">
+                    {metric.prefix ? `${metric.prefix}${metric.value.toLocaleString()}` : metric.value.toLocaleString()}
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <div className={cn('flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold', metric.change >= 0 ? 'bg-emerald-50 text-emerald-600' : 'bg-red-50 text-red-500')}>
+                      <TrendIcon className="w-2.5 h-2.5" />
+                      <span>{Math.abs(metric.change)}%</span>
+                    </div>
+                    <span className="text-[10px] text-muted-foreground/50">vs last month</span>
+                  </div>
+                </div>
+              </Card>
+            </button>
           );
         })}
       </div>
@@ -333,7 +340,7 @@ export default function AdminDashboard() {
             <h2 className="text-sm font-semibold text-foreground">Recent Users</h2>
             <p className="text-xs text-muted-foreground/70">Latest registrations</p>
           </div>
-          <Button variant="ghost" size="sm" className="text-xs h-7">Manage <ChevronRight className="w-3 h-3 ml-0.5" /></Button>
+          <Button variant="ghost" size="sm" className="text-xs h-7" onClick={() => navigate('/dashboard/admin/users')}>Manage <ChevronRight className="w-3 h-3 ml-0.5" /></Button>
         </div>
         <Card className="overflow-hidden">
           <table className="w-full">
@@ -375,10 +382,10 @@ export default function AdminDashboard() {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="min-w-[130px]">
-                        <DropdownMenuItem>View Profile</DropdownMenuItem>
-                        <DropdownMenuItem>Edit Details</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate('/dashboard/admin/users')}>View Profile</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate('/dashboard/admin/users')}>Edit Details</DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="text-destructive">Suspend</DropdownMenuItem>
+                        <DropdownMenuItem className="text-destructive" onClick={() => toast.success('User suspended (demo)')}>Suspend</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </td>
@@ -396,7 +403,7 @@ export default function AdminDashboard() {
               <h2 className="text-sm font-semibold text-foreground">Recent Activities</h2>
               <p className="text-xs text-muted-foreground/70">Platform-wide updates</p>
             </div>
-            <Button variant="ghost" size="sm" className="text-xs h-7">View all <ChevronRight className="w-3 h-3 ml-0.5" /></Button>
+            <Button variant="ghost" size="sm" className="text-xs h-7" onClick={() => toast.success('Full activity log coming soon')}>View all <ChevronRight className="w-3 h-3 ml-0.5" /></Button>
           </div>
           <div className="divide-y divide-border/40">
             {recentActivities.map((act) => (
@@ -440,19 +447,21 @@ export default function AdminDashboard() {
             <h2 className="text-sm font-semibold text-foreground mb-3">Quick Actions</h2>
             <div className="grid grid-cols-2 gap-2">
               {[
-                { label: 'Create Course', icon: UserPlus },
-                { label: 'Add Teacher', icon: GraduationCap },
-                { label: 'Publish Blog', icon: FileText },
-                { label: 'View Reports', icon: BarChart3 },
+                { label: 'Create Course', icon: UserPlus, to: '/dashboard/admin/courses' },
+                { label: 'Add Teacher', icon: GraduationCap, to: '/dashboard/admin/teachers' },
+                { label: 'Publish Blog', icon: FileText, to: '/dashboard/admin/blogs' },
+                { label: 'View Reports', icon: BarChart3, to: '/dashboard/admin/analytics' },
               ].map((action) => (
-                <Card key={action.label} className="p-3 cursor-pointer hover:bg-muted/30 transition-colors">
-                  <div className="flex flex-col items-center text-center gap-2">
-                    <div className="p-2 rounded-lg bg-muted">
-                      <action.icon className="w-4 h-4 text-muted-foreground" />
+                <button key={action.label} onClick={() => navigate(action.to)} className="w-full">
+                  <Card className="p-3 cursor-pointer hover:bg-muted/30 transition-colors hover:border-primary/30">
+                    <div className="flex flex-col items-center text-center gap-2">
+                      <div className="p-2 rounded-lg bg-muted">
+                        <action.icon className="w-4 h-4 text-muted-foreground" />
+                      </div>
+                      <p className="text-[10px] font-semibold text-foreground">{action.label}</p>
                     </div>
-                    <p className="text-[10px] font-semibold text-foreground">{action.label}</p>
-                  </div>
-                </Card>
+                  </Card>
+                </button>
               ))}
             </div>
           </div>

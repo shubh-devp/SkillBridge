@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import {
   BookOpen, Users, GraduationCap, ClipboardList, DollarSign,
@@ -35,10 +36,10 @@ const quickStats = [
 ];
 
 const myCourses = [
-  { id: 1, title: 'IIT-JEE Advanced Physics 2026', students: 128, rating: 4.8, revenue: '₹4,82,000', status: 'published' },
-  { id: 2, title: 'NEET Biology Crash Course', students: 94, rating: 4.6, revenue: '₹2,35,000', status: 'published' },
-  { id: 3, title: 'CBSE Class 12 Mathematics', students: 156, rating: 4.9, revenue: '₹3,12,000', status: 'published' },
-  { id: 4, title: 'JEE Advanced Chemistry - Organic', students: 67, rating: 4.7, revenue: '₹1,89,000', status: 'draft' },
+  { id: 1, slug: 'jee-advanced-physics-2026', title: 'IIT-JEE Advanced Physics 2026', students: 128, rating: 4.8, revenue: '₹4,82,000', status: 'published' },
+  { id: 2, slug: 'neet-ug-biology-masterclass', title: 'NEET Biology Crash Course', students: 94, rating: 4.6, revenue: '₹2,35,000', status: 'published' },
+  { id: 3, slug: 'jee-main-mathematics-intensive', title: 'CBSE Class 12 Mathematics', students: 156, rating: 4.9, revenue: '₹3,12,000', status: 'published' },
+  { id: 4, slug: 'jee-advanced-chemistry', title: 'JEE Advanced Chemistry - Organic', students: 67, rating: 4.7, revenue: '₹1,89,000', status: 'draft' },
 ];
 
 const recentSubmissions = [
@@ -91,6 +92,7 @@ function ChartTooltip({ active, payload, label, prefix }) {
 
 export default function TeacherDashboard() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const teacherName = user?.name || 'Prof. Sharma';
   const greeting = getGreeting();
@@ -147,19 +149,19 @@ export default function TeacherDashboard() {
         </div>
         <div className="flex flex-wrap gap-2">
           {pendingCount > 0 && (
-            <span className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/60 text-xs text-foreground">
+            <button onClick={() => navigate('/dashboard/teacher/assignments')} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/60 text-xs text-foreground hover:bg-muted/80 transition-colors">
               <span className="w-2 h-2 rounded-full bg-accent" />
               {pendingCount} submission{pendingCount > 1 ? 's' : ''} pending review
-            </span>
+            </button>
           )}
-          <span className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/60 text-xs text-foreground">
+          <button onClick={() => navigate('/dashboard/teacher/analytics')} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/60 text-xs text-foreground hover:bg-muted/80 transition-colors">
             <span className="w-2 h-2 rounded-full bg-primary" />
             {upcomingClasses.length} class{upcomingClasses.length > 1 ? 'es' : ''} today
-          </span>
-          <span className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/60 text-xs text-foreground">
+          </button>
+          <button onClick={() => navigate('/dashboard/teacher/analytics')} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/60 text-xs text-foreground hover:bg-muted/80 transition-colors">
             <span className="w-2 h-2 rounded-full bg-emerald-500" />
             Revenue up 18.2% this month
-          </span>
+          </button>
         </div>
       </Card>
 
@@ -167,22 +169,27 @@ export default function TeacherDashboard() {
         {quickStats.map((stat) => {
           const TrendIcon = stat.trend >= 0 ? ArrowUp : ArrowDown;
           return (
-            <Card key={stat.label} className="p-4">
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</p>
-                  <p className="text-2xl font-bold text-foreground mt-1">{stat.value}</p>
-                  <div className={cn('flex items-center gap-1 text-xs font-medium mt-1', stat.trend >= 0 ? 'text-emerald-600' : 'text-red-500')}>
-                    <TrendIcon className="w-3 h-3" />
-                    <span>{Math.abs(stat.trend)}</span>
-                    <span className="text-muted-foreground/50 font-normal">this month</span>
+            <button key={stat.label} onClick={() => {
+              const paths = { 'Total Courses': '/dashboard/teacher/courses', 'Active Students': '/dashboard/teacher/students', 'Active Batches': '/dashboard/teacher/courses', 'Pending Reviews': '/dashboard/teacher/assignments' };
+              navigate(paths[stat.label]);
+            }} className="w-full text-left">
+              <Card className="p-4 hover:border-primary/30 transition-colors cursor-pointer">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</p>
+                    <p className="text-2xl font-bold text-foreground mt-1">{stat.value}</p>
+                    <div className={cn('flex items-center gap-1 text-xs font-medium mt-1', stat.trend >= 0 ? 'text-emerald-600' : 'text-red-500')}>
+                      <TrendIcon className="w-3 h-3" />
+                      <span>{Math.abs(stat.trend)}</span>
+                      <span className="text-muted-foreground/50 font-normal">this month</span>
+                    </div>
+                  </div>
+                  <div className="p-2 rounded-lg bg-muted">
+                    <stat.icon className="w-4 h-4 text-muted-foreground" />
                   </div>
                 </div>
-                <div className="p-2 rounded-lg bg-muted">
-                  <stat.icon className="w-4 h-4 text-muted-foreground" />
-                </div>
-              </div>
-            </Card>
+              </Card>
+            </button>
           );
         })}
       </div>
@@ -267,8 +274,8 @@ export default function TeacherDashboard() {
                     </div>
                     <p className="text-xs font-semibold text-foreground">{course.revenue}</p>
                     <div className="flex gap-2">
-                      <Button size="sm" variant="outline" className="flex-1 h-7 text-xs"><Pencil className="w-3 h-3" /> Edit</Button>
-                      <Button size="sm" className="flex-1 h-7 text-xs">View</Button>
+                      <Button size="sm" variant="outline" className="flex-1 h-7 text-xs" onClick={(e) => { e.stopPropagation(); toast.success('Edit mode coming soon'); }}><Pencil className="w-3 h-3" /> Edit</Button>
+                      <Button size="sm" className="flex-1 h-7 text-xs" onClick={(e) => { e.stopPropagation(); navigate(`/courses/${course.slug}`); }}>View</Button>
                     </div>
                   </div>
                 </Card>
@@ -292,7 +299,7 @@ export default function TeacherDashboard() {
           </div>
           <Card className="p-3 space-y-1">
             {popularCourses.map((c, i) => (
-              <div key={c.name} className="flex items-center justify-between p-2.5 rounded-lg hover:bg-muted/30 transition-colors">
+              <button key={c.name} onClick={() => navigate('/dashboard/teacher/courses')} className="w-full flex items-center justify-between p-2.5 rounded-lg hover:bg-muted/30 transition-colors">
                 <div className="flex items-center gap-3 min-w-0 flex-1">
                   <span className="text-xs font-semibold text-muted-foreground/40 w-4">{i + 1}</span>
                   <div className="min-w-0">
@@ -301,7 +308,7 @@ export default function TeacherDashboard() {
                   </div>
                 </div>
                 <span className="text-xs font-semibold text-foreground shrink-0 ml-3">{c.revenue}</span>
-              </div>
+              </button>
             ))}
           </Card>
         </div>
@@ -314,7 +321,7 @@ export default function TeacherDashboard() {
               <h2 className="text-sm font-semibold text-foreground">Recent Submissions</h2>
               <p className="text-xs text-muted-foreground/70">{pendingCount} pending review</p>
             </div>
-            <Button variant="ghost" size="sm" className="text-xs h-7">View all <ChevronRight className="w-3 h-3 ml-0.5" /></Button>
+            <Button variant="ghost" size="sm" className="text-xs h-7" onClick={() => navigate('/dashboard/teacher/assignments')}>View all <ChevronRight className="w-3 h-3 ml-0.5" /></Button>
           </div>
           <Card className="overflow-hidden">
             <table className="w-full">
@@ -349,7 +356,7 @@ export default function TeacherDashboard() {
                       )}
                     </td>
                     <td className="px-4 py-3 text-right">
-                      <Button size="sm" variant="outline" className="h-7 text-xs px-3">
+                      <Button size="sm" variant="outline" className="h-7 text-xs px-3" onClick={() => toast.success(`Opening submission by ${sub.student}...`)}>
                         {sub.status === 'graded' ? 'View' : 'Review'}
                       </Button>
                     </td>
@@ -382,7 +389,7 @@ export default function TeacherDashboard() {
                       <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {cls.time}</span>
                       <span className="flex items-center gap-1"><Users className="w-3 h-3" /> {cls.students}</span>
                     </div>
-                    <Button size="sm" className="h-6 text-[10px] px-2.5 gap-1">
+                    <Button size="sm" className="h-6 text-[10px] px-2.5 gap-1" onClick={() => toast.success('Joining live class...')}>
                       <Video className="w-3 h-3" /> Join
                     </Button>
                   </div>

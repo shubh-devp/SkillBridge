@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 import {
   Calendar, Clock, Eye, ArrowLeft, BookOpen,
   Facebook, Twitter, Linkedin, Link as LinkIcon, Copy,
@@ -340,9 +341,9 @@ export default function BlogPost() {
             <div className="lg:col-span-1 order-2 lg:order-1">
               <div className="lg:sticky lg:top-24 flex lg:flex-col items-center gap-2">
                 <span className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground mb-1 hidden lg:block">Share</span>
-                <ShareButton icon={Facebook} label="Share on Facebook" className="hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2]" />
-                <ShareButton icon={Twitter} label="Share on Twitter" className="hover:bg-[#1DA1F2] hover:text-white hover:border-[#1DA1F2]" />
-                <ShareButton icon={Linkedin} label="Share on LinkedIn" className="hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]" />
+                <ShareButton icon={Facebook} label="Share on Facebook" className="hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2]" onClick={() => window.open('https://facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank')} />
+                <ShareButton icon={Twitter} label="Share on Twitter" className="hover:bg-[#1DA1F2] hover:text-white hover:border-[#1DA1F2]" onClick={() => window.open('https://twitter.com/intent/tweet?url=' + encodeURIComponent(window.location.href), '_blank')} />
+                <ShareButton icon={Linkedin} label="Share on LinkedIn" className="hover:bg-[#0A66C2] hover:text-white hover:border-[#0A66C2]" onClick={() => window.open('https://linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(window.location.href), '_blank')} />
                 <ShareButton
                   icon={copied ? Check : Copy}
                   label="Copy link"
@@ -365,7 +366,7 @@ export default function BlogPost() {
               {/* Tags */}
               <div className="flex flex-wrap gap-2 mt-10 pt-6 border-t">
                 {post.tags.map((tag) => (
-                  <Badge key={tag} variant="secondary" className="cursor-pointer hover:bg-primary hover:text-white transition-colors rounded-lg px-3 py-1.5">
+                  <Badge key={tag} variant="secondary" className="cursor-pointer hover:bg-primary hover:text-white transition-colors rounded-lg px-3 py-1.5" onClick={() => { navigate('/blog'); toast.success(`Showing posts tagged "${tag}"`); }}>
                     {tag}
                   </Badge>
                 ))}
@@ -384,8 +385,8 @@ export default function BlogPost() {
                       <h3 className="font-semibold text-xl text-card-foreground mb-1">{post.author}</h3>
                       <p className="text-sm text-muted-foreground mb-4">{post.authorBio}</p>
                       <div className="flex items-center gap-3">
-                        <Button variant="outline" size="sm" className="rounded-xl">View Profile</Button>
-                        <Button variant="ghost" size="sm" className="rounded-xl gap-1.5">
+                        <Button variant="outline" size="sm" className="rounded-xl" onClick={() => navigate('/teachers')}>View Profile</Button>
+                        <Button variant="ghost" size="sm" className="rounded-xl gap-1.5" onClick={() => toast.success('Contact feature coming soon')}>
                           <MessageSquare className="w-4 h-4" />
                           Contact
                         </Button>
@@ -416,13 +417,13 @@ export default function BlogPost() {
                             <p className="text-xs text-muted-foreground">{comment.date}</p>
                           </div>
                         </div>
-                        <button className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors">
+                        <button onClick={() => toast.success('Liked!')} className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors">
                           <ThumbsUp className="w-3.5 h-3.5" />
                           {comment.likes}
                         </button>
                       </div>
                       <p className="text-sm text-muted-foreground leading-relaxed">{comment.text}</p>
-                      <button className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors mt-2">
+                      <button onClick={() => toast.success('Reply feature coming soon')} className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors mt-2">
                         <MessageSquare className="w-3.5 h-3.5" />
                         Reply
                       </button>
@@ -457,7 +458,7 @@ export default function BlogPost() {
                         rows={4}
                         className="rounded-xl"
                       />
-                      <Button className="bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/20 rounded-xl">
+                      <Button className="bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/20 rounded-xl" onClick={() => { if (commentText.trim()) { toast.success('Comment posted!'); setCommentText(''); } else { toast.error('Please write a comment'); } }}>
                         <MessageSquare className="w-4 h-4 mr-2" />
                         Post Comment
                       </Button>

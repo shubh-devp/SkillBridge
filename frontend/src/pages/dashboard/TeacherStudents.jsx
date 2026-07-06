@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { Search, Users, Mail, Star, MoreHorizontal, GraduationCap, ChevronRight } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -22,6 +24,7 @@ const students = [
 const statusVariants = { active: 'success', inactive: 'secondary', 'at-risk': 'destructive' };
 
 export default function TeacherStudents() {
+  const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const filtered = students.filter(s => s.name.toLowerCase().includes(search.toLowerCase()));
 
@@ -94,10 +97,10 @@ export default function TeacherStudents() {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end" className="min-w-[130px]">
-                        <DropdownMenuItem>View Profile</DropdownMenuItem>
-                        <DropdownMenuItem>Send Message</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => navigate('/dashboard/teacher/students')}>View Profile</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => toast.success('Messaging feature coming soon')}>Send Message</DropdownMenuItem>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem className="text-destructive">Remove</DropdownMenuItem>
+                        <DropdownMenuItem className="text-destructive" onClick={() => toast.success('Student removed (demo)')}>Remove</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </td>

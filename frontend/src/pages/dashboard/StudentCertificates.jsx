@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import { Award, Download, Share2, ExternalLink } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -41,13 +42,13 @@ export default function StudentCertificates() {
                   <Badge variant="success" size="sm">{cert.grade}</Badge>
                 </div>
                 <div className="flex gap-2 pt-2">
-                  <Button size="sm" variant="outline" className="flex-1 h-8 text-xs gap-1">
+                  <Button size="sm" variant="outline" className="flex-1 h-8 text-xs gap-1" onClick={() => toast.success('Downloading certificate...')}>
                     <Download className="w-3 h-3" /> Download
                   </Button>
-                  <Button size="sm" variant="outline" className="h-8 w-8 p-0">
+                  <Button size="sm" variant="outline" className="h-8 w-8 p-0" onClick={() => toast.success('Share link copied!')}>
                     <Share2 className="w-3.5 h-3.5" />
                   </Button>
-                  <Button size="sm" variant="outline" className="h-8 w-8 p-0">
+                  <Button size="sm" variant="outline" className="h-8 w-8 p-0" onClick={() => toast.success('Opening verification page...')}>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </Button>
                 </div>

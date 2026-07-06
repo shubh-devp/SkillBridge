@@ -1,9 +1,15 @@
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { Spinner } from '@/components/shared/LoadingSpinner';
 import { useAuth } from '@/store/auth-context';
 
-export default function ProtectedRoute({ children }) {
-  const { isAuthenticated, isLoading } = useAuth();
+const roleDashboardMap = {
+  student: '/dashboard/student',
+  teacher: '/dashboard/teacher',
+  admin: '/dashboard/admin',
+};
+
+export default function ProtectedRoute({ children, allowedRoles }) {
+  const { isAuthenticated, isLoading, user } = useAuth();
   const location = useLocation();
 
   if (isLoading) {
@@ -18,5 +24,10 @@ export default function ProtectedRoute({ children }) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  return children;
+  if (allowedRoles && user?.role && !allowedRoles.includes(user.role)) {
+    const dashboardPath = roleDashboardMap[user.role] || '/dashboard/student';
+    return <Navigate to={dashboardPath} replace />;
+  }
+
+  return children ?? <Outlet />;
 }

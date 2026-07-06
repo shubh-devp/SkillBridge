@@ -1,5 +1,5 @@
 {
-  "name": "eduserve-backend",
+  "name": "skillbridge-backend",
   "version": "1.0.0",
   "description": "Premium Indian EdTech Platform - Backend API",
   "main": "src/app.js",

@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { Search, Star, BookOpen, Users, Mail, MoreHorizontal, CheckCircle, XCircle, UserPlus } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -13,14 +15,15 @@ import {
 import { cn } from '@/lib/utils';
 
 const teachers = [
-  { id: 1, name: 'Dr. Vikram Rathore', email: 'vikram.rathore@eduserve.in', courses: 3, students: 195, rating: 4.8, status: 'active', expertise: 'Physics', initials: 'VR' },
-  { id: 2, name: 'Prof. Sunita Mehta', email: 'sunita.mehta@eduserve.in', courses: 2, students: 142, rating: 4.6, status: 'active', expertise: 'Biology', initials: 'SM' },
-  { id: 3, name: 'Dr. Rajesh Kumar', email: 'rajesh.kumar@eduserve.in', courses: 5, students: 312, rating: 4.9, status: 'active', expertise: 'Mathematics', initials: 'RK' },
-  { id: 4, name: 'Prof. Ananya Sharma', email: 'ananya.sharma@eduserve.in', courses: 1, students: 67, rating: 4.7, status: 'pending', expertise: 'Computer Science', initials: 'AS' },
-  { id: 5, name: 'Mr. Arvind Singh', email: 'arvind.singh@eduserve.in', courses: 1, students: 83, rating: 4.5, status: 'active', expertise: 'History', initials: 'AS' },
+  { id: 1, name: 'Dr. Vikram Rathore', email: 'vikram.rathore@skillbridge.in', courses: 3, students: 195, rating: 4.8, status: 'active', expertise: 'Physics', initials: 'VR' },
+  { id: 2, name: 'Prof. Sunita Mehta', email: 'sunita.mehta@skillbridge.in', courses: 2, students: 142, rating: 4.6, status: 'active', expertise: 'Biology', initials: 'SM' },
+  { id: 3, name: 'Dr. Rajesh Kumar', email: 'rajesh.kumar@skillbridge.in', courses: 5, students: 312, rating: 4.9, status: 'active', expertise: 'Mathematics', initials: 'RK' },
+  { id: 4, name: 'Prof. Ananya Sharma', email: 'ananya.sharma@skillbridge.in', courses: 1, students: 67, rating: 4.7, status: 'pending', expertise: 'Computer Science', initials: 'AS' },
+  { id: 5, name: 'Mr. Arvind Singh', email: 'arvind.singh@skillbridge.in', courses: 1, students: 83, rating: 4.5, status: 'active', expertise: 'History', initials: 'AS' },
 ];
 
 export default function AdminTeachers() {
+  const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [tab, setTab] = useState('all');
   const filtered = teachers.filter(t => {
@@ -41,7 +44,7 @@ export default function AdminTeachers() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground/40" />
             <Input placeholder="Search teachers..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9 h-9 w-48 text-sm" />
           </div>
-          <Button size="sm" className="h-9 gap-1.5 text-xs"><UserPlus className="w-3.5 h-3.5" /> Add Teacher</Button>
+          <Button size="sm" className="h-9 gap-1.5 text-xs" onClick={() => toast.success('Teacher invitation form coming soon')}><UserPlus className="w-3.5 h-3.5" /> Add Teacher</Button>
         </div>
       </div>
 
@@ -80,8 +83,8 @@ export default function AdminTeachers() {
                 <div className="flex gap-1.5 shrink-0">
                   {t.status === 'pending' && (
                     <>
-                      <Button size="sm" variant="outline" className="h-8 w-8 p-0 text-emerald-600 border-emerald-200 hover:bg-emerald-50"><CheckCircle className="w-3.5 h-3.5" /></Button>
-                      <Button size="sm" variant="outline" className="h-8 w-8 p-0 text-red-500 border-red-200 hover:bg-red-50"><XCircle className="w-3.5 h-3.5" /></Button>
+                      <Button size="sm" variant="outline" className="h-8 w-8 p-0 text-emerald-600 border-emerald-200 hover:bg-emerald-50" onClick={() => toast.success('Teacher approved')}><CheckCircle className="w-3.5 h-3.5" /></Button>
+                      <Button size="sm" variant="outline" className="h-8 w-8 p-0 text-red-500 border-red-200 hover:bg-red-50" onClick={() => toast.success('Teacher request rejected')}><XCircle className="w-3.5 h-3.5" /></Button>
                     </>
                   )}
                   <DropdownMenu>
@@ -91,10 +94,10 @@ export default function AdminTeachers() {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end" className="min-w-[130px]">
-                      <DropdownMenuItem>View Profile</DropdownMenuItem>
-                      <DropdownMenuItem>View Courses</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => navigate('/dashboard/admin/teachers')}>View Profile</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => navigate('/dashboard/admin/courses')}>View Courses</DropdownMenuItem>
                       <DropdownMenuSeparator />
-                      <DropdownMenuItem className="text-destructive">Remove</DropdownMenuItem>
+                      <DropdownMenuItem className="text-destructive" onClick={() => toast.success('Teacher removed (demo)')}>Remove</DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>

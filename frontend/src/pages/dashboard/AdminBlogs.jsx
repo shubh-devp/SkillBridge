@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { Search, FileText, Plus, Eye, Calendar, MessageSquare, ThumbsUp, MoreHorizontal } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -15,6 +17,7 @@ const blogs = [
 ];
 
 export default function AdminBlogs() {
+  const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const [tab, setTab] = useState('all');
   const filtered = blogs.filter(b => {
@@ -35,7 +38,7 @@ export default function AdminBlogs() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-muted-foreground/40" />
             <Input placeholder="Search posts..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9 h-9 w-48 text-sm" />
           </div>
-          <Button size="sm" className="h-9 gap-1.5 text-xs"><Plus className="w-3.5 h-3.5" /> New Post</Button>
+          <Button size="sm" className="h-9 gap-1.5 text-xs" onClick={() => toast.success('New blog post form coming soon')}><Plus className="w-3.5 h-3.5" /> New Post</Button>
         </div>
       </div>
 
@@ -69,8 +72,8 @@ export default function AdminBlogs() {
                   </div>
                 </div>
                 <div className="flex gap-1.5 shrink-0">
-                  <Button size="sm" variant="outline" className="h-8 text-xs gap-1"><Eye className="w-3 h-3" /> Preview</Button>
-                  <Button size="sm" variant="ghost" className="h-8 w-8 p-0"><MoreHorizontal className="w-3.5 h-3.5" /></Button>
+                  <Button size="sm" variant="outline" className="h-8 text-xs gap-1" onClick={() => navigate('/blog')}><Eye className="w-3 h-3" /> Preview</Button>
+                  <Button size="sm" variant="ghost" className="h-8 w-8 p-0" onClick={() => toast.success('More options coming soon')}><MoreHorizontal className="w-3.5 h-3.5" /></Button>
                 </div>
               </div>
             </Card>

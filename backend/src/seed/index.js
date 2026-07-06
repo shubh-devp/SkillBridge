@@ -49,28 +49,28 @@ const seed = async () => {
     const admins = await User.insertMany([
       {
         name: 'Dr. Vikram Singh',
-        email: 'vikram.singh@eduserve.in',
+        email: 'vikram.singh@skillbridge.in',
         phone: '9876543210',
         password: adminPassword,
         role: 'admin',
         isVerified: true,
-        bio: 'Founder and CEO of EduServe with over 20 years of experience in Indian education. PhD in Educational Technology from IIT Bombay. Passionate about making quality education accessible to every Indian student.',
+        bio: 'Founder and CEO of SkillBridge with over 20 years of experience in Indian education. PhD in Educational Technology from IIT Bombay. Passionate about making quality education accessible to every Indian student.',
       },
       {
         name: 'Ananya Gupta',
-        email: 'ananya.gupta@eduserve.in',
+        email: 'ananya.gupta@skillbridge.in',
         phone: '9988776655',
         password: adminPassword,
         role: 'admin',
         isVerified: true,
-        bio: 'Chief Academic Officer at EduServe. Former HOD at Delhi University with 15 years of teaching experience. Specializes in curriculum design and examination strategy for competitive exams.',
+        bio: 'Chief Academic Officer at SkillBridge. Former HOD at Delhi University with 15 years of teaching experience. Specializes in curriculum design and examination strategy for competitive exams.',
       },
     ]);
 
     const teachers = await User.insertMany([
       {
         name: 'Dr. Rajesh Kumar',
-        email: 'rajesh.kumar@eduserve.in',
+        email: 'rajesh.kumar@skillbridge.in',
         phone: '9812345678',
         password: teacherPassword,
         role: 'teacher',
@@ -79,7 +79,7 @@ const seed = async () => {
       },
       {
         name: 'Prof. Priya Sharma',
-        email: 'priya.sharma@eduserve.in',
+        email: 'priya.sharma@skillbridge.in',
         phone: '9876123450',
         password: teacherPassword,
         role: 'teacher',
@@ -88,7 +88,7 @@ const seed = async () => {
       },
       {
         name: 'Dr. Suresh Patel',
-        email: 'suresh.patel@eduserve.in',
+        email: 'suresh.patel@skillbridge.in',
         phone: '9765432109',
         password: teacherPassword,
         role: 'teacher',
@@ -97,7 +97,7 @@ const seed = async () => {
       },
       {
         name: 'Neha Verma',
-        email: 'neha.verma@eduserve.in',
+        email: 'neha.verma@skillbridge.in',
         phone: '9654321098',
         password: teacherPassword,
         role: 'teacher',
@@ -106,7 +106,7 @@ const seed = async () => {
       },
       {
         name: 'Dr. Amit Joshi',
-        email: 'amit.joshi@eduserve.in',
+        email: 'amit.joshi@skillbridge.in',
         phone: '9543210987',
         password: teacherPassword,
         role: 'teacher',
@@ -524,7 +524,7 @@ Revision is Key: The last 30 days should be solely for revision. Go through your
 
 Stay Healthy: Board exams are a marathon, not a sprint. Eat nutritious food, sleep 7-8 hours, exercise regularly, and take short breaks to relax. A healthy mind retains information better.
 
-At EduServe, we have designed specialized courses that complement your board preparation with expert guidance, doubt-clearing sessions, and comprehensive study materials.`, 
+At SkillBridge, we have designed specialized courses that complement your board preparation with expert guidance, doubt-clearing sessions, and comprehensive study materials.`, 
         excerpt: 'A proven 6-month strategic study plan to help CBSE students score 90% and above in board exams. Covers timetable planning, NCERT mastery, revision techniques, and health tips.',
         author: teachers[2]._id,
         category: 'Exam Tips',
@@ -558,27 +558,27 @@ Remember, consistency beats intensity. Study 8-10 hours daily with focus, take o
         readTime: 10,
       },
       {
-        title: 'From IIT Bombay to EduServe: My Journey of Building India\'s Learning Platform',
-        slug: 'from-iit-bombay-to-eduserve-journey-building-india-learning-platform',
-        content: `Every great educational journey has a story behind it. Here is mine - the story of how EduServe was born from a dream to transform Indian education.
+        title: 'From IIT Bombay to SkillBridge: My Journey of Building India\'s Learning Platform',
+        slug: 'from-iit-bombay-to-skillbridge-journey-building-india-learning-platform',
+        content: `Every great educational journey has a story behind it. Here is mine - the story of how SkillBridge was born from a dream to transform Indian education.
 
 My tryst with teaching began during my PhD days at IIT Bombay when I started tutoring underprivileged students for JEE Advanced. I realized that quality education was accessible only to those who could afford expensive coaching in metro cities. Students from tier-2 and tier-3 cities, despite having equal potential, lacked access to good teachers.
 
-In 2018, I founded EduServe with a simple mission: make world-class education accessible and affordable for every Indian student. We started with two courses and 50 students. Today, we serve over 10,000 students across 200+ cities in India.
+In 2018, I founded SkillBridge with a simple mission: make world-class education accessible and affordable for every Indian student. We started with two courses and 50 students. Today, we serve over 10,000 students across 200+ cities in India.
 
-What sets EduServe apart is our focus on Indian education needs. Our courses are designed specifically for Indian competitive exams, our content is in Hinglish for better comprehension, and our pricing is tailored for the Indian market. Every teacher on our platform is vetted for both subject expertise and teaching ability.
+What sets SkillBridge apart is our focus on Indian education needs. Our courses are designed specifically for Indian competitive exams, our content is in Hinglish for better comprehension, and our pricing is tailored for the Indian market. Every teacher on our platform is vetted for both subject expertise and teaching ability.
 
 Our students have achieved remarkable success - 127 selections in IIT-JEE Advanced 2025, 340+ NEET qualifiers, and thousands of CBSE board toppers. But what makes me most proud is the message from a student in a small town in Bihar who said, "Sir, for the first time, I felt like I had a chance."
 
 The journey continues. We are building AI-powered personalized learning paths, expanding to more regional languages, and partnering with schools across India. Our goal is to reach every student who dreams big, regardless of where they come from.
 
-To every student reading this: your background does not determine your future. With the right guidance and hard work, you can achieve anything. Let EduServe be your partner in this journey.`, 
-        excerpt: 'Founder Dr. Vikram Singh shares the inspiring journey of building EduServe from IIT Bombay to a platform serving 10,000+ students across 200+ Indian cities.',
+To every student reading this: your background does not determine your future. With the right guidance and hard work, you can achieve anything. Let SkillBridge be your partner in this journey.`, 
+        excerpt: 'Founder Dr. Vikram Singh shares the inspiring journey of building SkillBridge from IIT Bombay to a platform serving 10,000+ students across 200+ Indian cities.',
         author: admins[0]._id,
         category: 'Success Stories',
         isPublished: true,
         isFeatured: true,
-        tags: ['EduServe', 'Founder Story', 'EdTech', 'IIT Bombay', 'Inspiration'],
+        tags: ['SkillBridge', 'Founder Story', 'EdTech', 'IIT Bombay', 'Inspiration'],
         readTime: 12,
       },
       {
@@ -606,7 +606,7 @@ To every student reading this: your background does not determine your future. W
 
 10. Swift: For iOS/macOS app development. The Apple ecosystem continues to grow, and Swift developers are well-compensated. 10-25 LPA.
 
-At EduServe, we offer comprehensive courses in Python, JavaScript, C++, and more. Our programming courses are designed by industry professionals and include real-world projects that build your portfolio.`, 
+At SkillBridge, we offer comprehensive courses in Python, JavaScript, C++, and more. Our programming courses are designed by industry professionals and include real-world projects that build your portfolio.`, 
         excerpt: 'A comprehensive guide to the top 10 programming languages for 2026 with salary ranges for the Indian job market. Includes Python, JavaScript, Rust, Go, and more.',
         author: teachers[3]._id,
         category: 'Career Advice',
@@ -628,7 +628,7 @@ Months 13-16 (Integration Phase): Start taking full syllabus mock tests every we
 
 Months 17-18 (Final Polish): Take 3-4 mock tests per week. Revise all formulae, concepts, and shortcuts. Focus on speed and accuracy. Maintain a positive mindset and ensure proper sleep and nutrition.
 
-Resource Recommendations: For Physics, follow Dr. Rajesh Kumar\'s JEE Advanced course on EduServe which covers all topics with problem-solving techniques. For Chemistry, Prof. Priya Sharma\'s course is excellent for organic reaction mechanisms. For Mathematics, Dr. Suresh Patel\'s sessions on calculus and algebra are unparalleled.
+Resource Recommendations: For Physics, follow Dr. Rajesh Kumar\'s JEE Advanced course on SkillBridge which covers all topics with problem-solving techniques. For Chemistry, Prof. Priya Sharma\'s course is excellent for organic reaction mechanisms. For Mathematics, Dr. Suresh Patel\'s sessions on calculus and algebra are unparalleled.
 
 Common Mistakes to Avoid: Do not ignore any subject - focus equally on all three. Do not study without solving problems - theory without practice is useless. Do not skip revision - without regular revision, you forget 80% of what you learn within a month.
 
@@ -660,7 +660,7 @@ Remember, JEE Advanced tests your problem-solving ability, not just your knowled
         status: 'upcoming',
         mode: 'Live Online',
         platform: 'Zoom',
-        meetingLink: 'https://zoom.us/j/eduserve-jee-advanced-morning',
+        meetingLink: 'https://zoom.us/j/skillbridge-jee-advanced-morning',
         fee: { amount: 24999, currency: 'INR' },
       },
       {
@@ -678,7 +678,7 @@ Remember, JEE Advanced tests your problem-solving ability, not just your knowled
         status: 'upcoming',
         mode: 'Live Online',
         platform: 'Google Meet',
-        meetingLink: 'https://meet.google.com/eduserve-neet-weekend',
+        meetingLink: 'https://meet.google.com/skillbridge-neet-weekend',
         fee: { amount: 19999, currency: 'INR' },
       },
       {
@@ -696,7 +696,7 @@ Remember, JEE Advanced tests your problem-solving ability, not just your knowled
         status: 'upcoming',
         mode: 'Live Online',
         platform: 'Zoom',
-        meetingLink: 'https://zoom.us/j/eduserve-python-evening',
+        meetingLink: 'https://zoom.us/j/skillbridge-python-evening',
         fee: { amount: 5999, currency: 'INR' },
       },
     ]);

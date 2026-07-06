@@ -10,12 +10,15 @@ const DashboardLayout = lazy(() => import('@/layouts/DashboardLayout'));
 const Home = lazy(() => import('@/pages/Home'));
 const Courses = lazy(() => import('@/pages/Courses'));
 const CourseDetails = lazy(() => import('@/pages/CourseDetails'));
+const CourseLearn = lazy(() => import('@/pages/CourseLearn'));
 const Teachers = lazy(() => import('@/pages/Teachers'));
 const TeacherDetails = lazy(() => import('@/pages/TeacherDetails'));
 const About = lazy(() => import('@/pages/About'));
 const Blog = lazy(() => import('@/pages/Blog'));
 const BlogPost = lazy(() => import('@/pages/BlogPost'));
 const Contact = lazy(() => import('@/pages/Contact'));
+const Terms = lazy(() => import('@/pages/Terms'));
+const Privacy = lazy(() => import('@/pages/Privacy'));
 const Login = lazy(() => import('@/pages/auth/Login'));
 const Register = lazy(() => import('@/pages/auth/Register'));
 const ForgotPassword = lazy(() => import('@/pages/auth/ForgotPassword'));
@@ -72,6 +75,8 @@ export default function AppRouter() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
         </Route>
 
         <Route element={<AuthLayout />}>
@@ -82,6 +87,7 @@ export default function AppRouter() {
         </Route>
 
         <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
+        <Route path="/courses/:slug/learn" element={<ProtectedRoute><CourseLearn /></ProtectedRoute>} />
 
         <Route
           path="/dashboard"
@@ -93,30 +99,36 @@ export default function AppRouter() {
         >
           <Route index element={<DashboardRedirect />} />
 
-          <Route path="student" element={<StudentDashboard />} />
-          <Route path="student/courses" element={<StudentCourses />} />
-          <Route path="student/wishlist" element={<StudentWishlist />} />
-          <Route path="student/tests" element={<StudentTests />} />
-          <Route path="student/assignments" element={<StudentAssignments />} />
-          <Route path="student/certificates" element={<StudentCertificates />} />
-          <Route path="student/profile" element={<Navigate to="/dashboard/profile" replace />} />
+          <Route element={<ProtectedRoute allowedRoles={['student']} />}>
+            <Route path="student" element={<StudentDashboard />} />
+            <Route path="student/courses" element={<StudentCourses />} />
+            <Route path="student/wishlist" element={<StudentWishlist />} />
+            <Route path="student/tests" element={<StudentTests />} />
+            <Route path="student/assignments" element={<StudentAssignments />} />
+            <Route path="student/certificates" element={<StudentCertificates />} />
+            <Route path="student/profile" element={<Navigate to="/dashboard/profile" replace />} />
+          </Route>
 
-          <Route path="teacher" element={<TeacherDashboard />} />
-          <Route path="teacher/courses" element={<TeacherCourses />} />
-          <Route path="teacher/students" element={<TeacherStudents />} />
-          <Route path="teacher/tests" element={<TeacherTests />} />
-          <Route path="teacher/assignments" element={<TeacherAssignments />} />
-          <Route path="teacher/analytics" element={<TeacherAnalytics />} />
-          <Route path="teacher/profile" element={<Navigate to="/dashboard/profile" replace />} />
+          <Route element={<ProtectedRoute allowedRoles={['teacher']} />}>
+            <Route path="teacher" element={<TeacherDashboard />} />
+            <Route path="teacher/courses" element={<TeacherCourses />} />
+            <Route path="teacher/students" element={<TeacherStudents />} />
+            <Route path="teacher/tests" element={<TeacherTests />} />
+            <Route path="teacher/assignments" element={<TeacherAssignments />} />
+            <Route path="teacher/analytics" element={<TeacherAnalytics />} />
+            <Route path="teacher/profile" element={<Navigate to="/dashboard/profile" replace />} />
+          </Route>
 
-          <Route path="admin" element={<AdminDashboard />} />
-          <Route path="admin/users" element={<AdminUsers />} />
-          <Route path="admin/courses" element={<AdminCourses />} />
-          <Route path="admin/teachers" element={<AdminTeachers />} />
-          <Route path="admin/blogs" element={<AdminBlogs />} />
-          <Route path="admin/messages" element={<AdminMessages />} />
-          <Route path="admin/analytics" element={<AdminAnalytics />} />
-          <Route path="admin/settings" element={<AdminSettings />} />
+          <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
+            <Route path="admin" element={<AdminDashboard />} />
+            <Route path="admin/users" element={<AdminUsers />} />
+            <Route path="admin/courses" element={<AdminCourses />} />
+            <Route path="admin/teachers" element={<AdminTeachers />} />
+            <Route path="admin/blogs" element={<AdminBlogs />} />
+            <Route path="admin/messages" element={<AdminMessages />} />
+            <Route path="admin/analytics" element={<AdminAnalytics />} />
+            <Route path="admin/settings" element={<AdminSettings />} />
+          </Route>
 
           <Route path="notifications" element={<div className="p-12 text-center"><p className="text-muted-foreground">Notifications page coming soon</p></div>} />
           <Route path="profile" element={<ProfilePage />} />

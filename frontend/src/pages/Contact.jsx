@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import toast from 'react-hot-toast';
 import {
   Mail, Phone, MapPin, Clock, Send, Facebook, Twitter,
   Instagram, Linkedin, Youtube, CheckCircle, AlertCircle,
@@ -45,11 +46,11 @@ const contactInfo = [
 ];
 
 const socialLinks = [
-  { icon: Facebook, href: '#', label: 'Facebook', color: 'hover:bg-[#1877F2]' },
-  { icon: Twitter, href: '#', label: 'Twitter', color: 'hover:bg-[#1DA1F2]' },
-  { icon: Instagram, href: '#', label: 'Instagram', color: 'hover:bg-[#E4405F]' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn', color: 'hover:bg-[#0A66C2]' },
-  { icon: Youtube, href: '#', label: 'YouTube', color: 'hover:bg-[#FF0000]' },
+  { icon: Facebook, href: 'https://facebook.com/skillbridge', label: 'Facebook', color: 'hover:bg-[#1877F2]' },
+  { icon: Twitter, href: 'https://twitter.com/skillbridge', label: 'Twitter', color: 'hover:bg-[#1DA1F2]' },
+  { icon: Instagram, href: 'https://instagram.com/skillbridge', label: 'Instagram', color: 'hover:bg-[#E4405F]' },
+  { icon: Linkedin, href: 'https://linkedin.com/company/skillbridge', label: 'LinkedIn', color: 'hover:bg-[#0A66C2]' },
+  { icon: Youtube, href: 'https://youtube.com/@skillbridge', label: 'YouTube', color: 'hover:bg-[#FF0000]' },
 ];
 
 const courseInterests = [
@@ -114,6 +115,7 @@ export default function Contact() {
     await new Promise((resolve) => setTimeout(resolve, 1500));
     setIsSubmitting(false);
     setSubmitted(true);
+    toast.success('Message sent successfully!');
   };
 
   const handleChange = (field) => (e) => {

@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { Calendar, Clock, BarChart3, ChevronRight, Filter } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -20,6 +22,7 @@ const statusLabels = { upcoming: 'Upcoming', completed: 'Completed', missed: 'Mi
 const statusVariants = { upcoming: 'accent', completed: 'success', missed: 'destructive' };
 
 export default function StudentTests() {
+  const navigate = useNavigate();
   const [tab, setTab] = useState('all');
 
   const filtered = tab === 'all' ? allTests : allTests.filter(t => t.status === tab);
@@ -31,7 +34,7 @@ export default function StudentTests() {
           <h1 className="text-xl font-bold text-foreground">Tests & Assessments</h1>
           <p className="text-sm text-muted-foreground/70 mt-0.5">{allTests.length} total tests</p>
         </div>
-        <Button variant="outline" size="sm" className="h-9 gap-1.5 text-xs">
+        <Button variant="outline" size="sm" className="h-9 gap-1.5 text-xs" onClick={() => toast.success('Filter options coming soon')}>
           <Filter className="w-3.5 h-3.5" /> Filter
         </Button>
       </div>
@@ -75,7 +78,7 @@ export default function StudentTests() {
                     {test.score && <span className="font-semibold text-primary">Score: {test.score}</span>}
                   </div>
                 </div>
-                <Button size="sm" className="h-8 shrink-0 text-xs" variant={test.status === 'completed' ? 'outline' : 'default'}>
+                <Button size="sm" className="h-8 shrink-0 text-xs" variant={test.status === 'completed' ? 'outline' : 'default'} onClick={() => toast.success(test.status === 'completed' ? 'Opening test review...' : test.status === 'missed' ? 'Starting retake...' : 'Starting test...')}>
                   {test.status === 'completed' ? 'Review' : test.status === 'missed' ? 'Retake' : 'Start'}
                 </Button>
               </div>

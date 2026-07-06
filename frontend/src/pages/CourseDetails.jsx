@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import {
   BookOpen, Star, Users, Clock, PlayCircle, CheckCircle,
@@ -148,6 +149,7 @@ function StatCard({ icon: Icon, label, value, className }) {
 
 export default function CourseDetails() {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
   const [addedToWishlist, setAddedToWishlist] = useState(false);
@@ -281,7 +283,7 @@ export default function CourseDetails() {
                 </div>
 
                 {/* Course Preview Image */}
-                <div className="relative h-56 md:h-72 rounded-2xl overflow-hidden bg-gradient-to-br from-primary/10 via-primary/5 to-accent/10 border">
+                <button onClick={() => toast.success('Opening course preview...')} className="relative h-56 md:h-72 rounded-2xl overflow-hidden bg-gradient-to-br from-primary/10 via-primary/5 to-accent/10 border w-full text-left">
                   <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/[0.06] via-transparent to-transparent" />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="text-center">
@@ -292,7 +294,7 @@ export default function CourseDetails() {
                       <p className="text-xs text-muted-foreground">Watch introduction video</p>
                     </div>
                   </div>
-                </div>
+                </button>
               </motion.div>
             </div>
 
@@ -324,7 +326,8 @@ export default function CourseDetails() {
                     </div>
 
                     <div className="space-y-3">
-                      <Button size="lg" className="w-full h-13 bg-primary hover:bg-primary/90 text-white text-base font-semibold shadow-lg shadow-primary/30 rounded-xl">
+                      <Button size="lg" className="w-full h-13 bg-primary hover:bg-primary/90 text-white text-base font-semibold shadow-lg shadow-primary/30 rounded-xl"
+                        onClick={() => { toast.success('Enrolled successfully! Redirecting...'); navigate('/dashboard/student/courses'); }}>
                         <GraduationCap className="w-5 h-5 mr-2" />
                         Enroll Now
                       </Button>
@@ -332,7 +335,7 @@ export default function CourseDetails() {
                         variant="outline"
                         size="lg"
                         className="w-full h-12 rounded-xl border-2"
-                        onClick={() => setAddedToWishlist(!addedToWishlist)}
+                        onClick={() => { setAddedToWishlist(!addedToWishlist); toast.success(addedToWishlist ? 'Removed from wishlist' : 'Added to wishlist'); }}
                       >
                         <Heart className={cn('w-4 h-4 mr-2', addedToWishlist ? 'fill-red-500 text-red-500' : '')} />
                         {addedToWishlist ? 'Saved to Wishlist' : 'Add to Wishlist'}
@@ -584,11 +587,11 @@ export default function CourseDetails() {
                         </div>
                         <p className="text-sm text-muted-foreground leading-relaxed">{review.comment}</p>
                         <div className="flex items-center gap-4 mt-4 pt-3 border-t">
-                          <button className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors">
+                          <button onClick={() => toast.success('Marked as helpful')} className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors">
                             <ThumbsUp className="w-3.5 h-3.5" />
                             Helpful
                           </button>
-                          <button className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors">
+                          <button onClick={() => toast.success('Reply feature coming soon')} className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-primary transition-colors">
                             <MessageSquare className="w-3.5 h-3.5" />
                             Reply
                           </button>

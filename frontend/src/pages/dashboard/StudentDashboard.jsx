@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import {
   BookOpen, ClipboardList, FileText, Award, ArrowUp, ArrowDown,
@@ -35,11 +36,11 @@ const quickStats = [
 ];
 
 const enrolledCourses = [
-  { id: 1, title: 'IIT-JEE Advanced Physics 2026', instructor: 'Dr. Vikram Rathore', progress: 72, total: 24, done: 17, category: 'Engineering' },
-  { id: 2, title: 'NEET Biology Crash Course', instructor: 'Prof. Sunita Mehta', progress: 45, total: 18, done: 8, category: 'Medical' },
-  { id: 3, title: 'CBSE Class 12 Mathematics', instructor: 'Dr. Rajesh Kumar', progress: 88, total: 15, done: 13, category: 'Board Exams' },
-  { id: 4, title: 'GATE Computer Science 2026', instructor: 'Prof. Ananya Sharma', progress: 34, total: 30, done: 10, category: 'Postgraduate' },
-  { id: 5, title: 'UPSC Civil Services Foundation', instructor: 'Mr. Arvind Singh', progress: 15, total: 40, done: 6, category: 'Civil Services' },
+  { id: 1, slug: 'jee-advanced-physics-2026', title: 'IIT-JEE Advanced Physics 2026', instructor: 'Dr. Vikram Rathore', progress: 72, total: 24, done: 17, category: 'Engineering' },
+  { id: 2, slug: 'neet-ug-biology-masterclass', title: 'NEET Biology Crash Course', instructor: 'Prof. Sunita Mehta', progress: 45, total: 18, done: 8, category: 'Medical' },
+  { id: 3, slug: 'jee-main-mathematics-intensive', title: 'CBSE Class 12 Mathematics', instructor: 'Dr. Rajesh Kumar', progress: 88, total: 15, done: 13, category: 'Board Exams' },
+  { id: 4, slug: 'python-data-science-ai', title: 'GATE Computer Science 2026', instructor: 'Prof. Ananya Sharma', progress: 34, total: 30, done: 10, category: 'Postgraduate' },
+  { id: 5, slug: 'upsc-foundation-course', title: 'UPSC Civil Services Foundation', instructor: 'Mr. Arvind Singh', progress: 15, total: 40, done: 6, category: 'Civil Services' },
 ];
 
 const upcomingTests = [
@@ -89,6 +90,7 @@ function ChartTooltip({ active, payload, label, formatter }) {
 
 export default function StudentDashboard() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const studentName = user?.name || 'Rohit';
   const greeting = getGreeting();
@@ -148,14 +150,14 @@ export default function StudentDashboard() {
           <h2 className="text-sm font-semibold text-foreground">Today's Focus</h2>
         </div>
         <div className="flex flex-wrap gap-2">
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/60">
+          <button onClick={() => navigate('/dashboard/student/tests')} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/60 hover:bg-muted/80 transition-colors">
             <div className="w-2 h-2 rounded-full bg-accent" />
             <span className="text-xs text-foreground">Weekly Mock Test #5 today</span>
-          </div>
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/60">
+          </button>
+          <button onClick={() => navigate('/dashboard/student/assignments')} className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/60 hover:bg-muted/80 transition-colors">
             <div className="w-2 h-2 rounded-full bg-destructive" />
             <span className="text-xs text-foreground">Calculus assessment overdue</span>
-          </div>
+          </button>
         </div>
       </Card>
 
@@ -163,22 +165,27 @@ export default function StudentDashboard() {
         {quickStats.map((stat) => {
           const TrendIcon = stat.trend >= 0 ? ArrowUp : ArrowDown;
           return (
-            <Card key={stat.label} className="p-4">
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</p>
-                  <p className="text-2xl font-bold text-foreground mt-1">{stat.value}</p>
-                  <div className={cn('flex items-center gap-1 text-xs font-medium mt-1', stat.trend >= 0 ? 'text-emerald-600' : 'text-red-500')}>
-                    <TrendIcon className="w-3 h-3" />
-                    <span>{Math.abs(stat.trend)}%</span>
-                    <span className="text-muted-foreground/50 font-normal">vs last month</span>
+            <button key={stat.label} onClick={() => {
+              const paths = { 'Enrolled Courses': '/dashboard/student/courses', 'Tests Taken': '/dashboard/student/tests', 'Assignments Done': '/dashboard/student/assignments', 'Certificates Earned': '/dashboard/student/certificates' };
+              navigate(paths[stat.label]);
+            }} className="w-full text-left">
+              <Card className="p-4 hover:border-primary/30 transition-colors cursor-pointer">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider">{stat.label}</p>
+                    <p className="text-2xl font-bold text-foreground mt-1">{stat.value}</p>
+                    <div className={cn('flex items-center gap-1 text-xs font-medium mt-1', stat.trend >= 0 ? 'text-emerald-600' : 'text-red-500')}>
+                      <TrendIcon className="w-3 h-3" />
+                      <span>{Math.abs(stat.trend)}%</span>
+                      <span className="text-muted-foreground/50 font-normal">vs last month</span>
+                    </div>
+                  </div>
+                  <div className="p-2 rounded-lg bg-muted">
+                    <stat.icon className="w-4 h-4 text-muted-foreground" />
                   </div>
                 </div>
-                <div className="p-2 rounded-lg bg-muted">
-                  <stat.icon className="w-4 h-4 text-muted-foreground" />
-                </div>
-              </div>
-            </Card>
+              </Card>
+            </button>
           );
         })}
       </div>
@@ -210,7 +217,7 @@ export default function StudentDashboard() {
                         <span className="font-semibold text-foreground">{course.progress}%</span>
                       </div>
                       <Progress value={course.progress} className="h-1.5" />
-                      <Button size="sm" className="w-full h-8 text-xs gap-1">
+                      <Button size="sm" className="w-full h-8 text-xs gap-1" onClick={(e) => { e.stopPropagation(); navigate(`/courses/${course.slug}`); }}>
                         <Play className="w-3 h-3" /> Continue
                       </Button>
                     </div>
@@ -226,7 +233,7 @@ export default function StudentDashboard() {
                 <h2 className="text-sm font-semibold text-foreground">Upcoming Tests</h2>
                 <p className="text-xs text-muted-foreground/70">{upcomingTests.length} tests scheduled</p>
               </div>
-              <Button variant="ghost" size="sm" className="text-xs h-7">View all <ChevronRight className="w-3 h-3 ml-0.5" /></Button>
+              <Button variant="ghost" size="sm" className="text-xs h-7" onClick={() => navigate('/dashboard/student/tests')}>View all <ChevronRight className="w-3 h-3 ml-0.5" /></Button>
             </div>
             <div className="space-y-2">
               {upcomingTests.map((test) => (
@@ -245,7 +252,7 @@ export default function StudentDashboard() {
                         <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {test.duration}</span>
                       </div>
                     </div>
-                    <Button size="sm" className="h-8 shrink-0 text-xs">Start</Button>
+                    <Button size="sm" className="h-8 shrink-0 text-xs" onClick={() => navigate('/dashboard/student/tests')}>Start</Button>
                   </div>
                 </Card>
               ))}
@@ -258,7 +265,7 @@ export default function StudentDashboard() {
                 <h2 className="text-sm font-semibold text-foreground">Pending Assignments</h2>
                 <p className="text-xs text-muted-foreground/70">{pendingAssignments.length} need attention</p>
               </div>
-              <Button variant="ghost" size="sm" className="text-xs h-7">View all <ChevronRight className="w-3 h-3 ml-0.5" /></Button>
+              <Button variant="ghost" size="sm" className="text-xs h-7" onClick={() => navigate('/dashboard/student/assignments')}>View all <ChevronRight className="w-3 h-3 ml-0.5" /></Button>
             </div>
             <Card className="divide-y divide-border/40">
               {pendingAssignments.map((a) => (
@@ -267,7 +274,7 @@ export default function StudentDashboard() {
                     <p className="text-sm font-medium text-foreground truncate">{a.title}</p>
                     <p className="text-xs text-muted-foreground/70 mt-0.5">{a.course} &middot; Due {a.dueDate}</p>
                   </div>
-                  <Button size="sm" variant="outline" className="h-7 text-xs px-3 shrink-0 ml-3">Submit</Button>
+                  <Button size="sm" variant="outline" className="h-7 text-xs px-3 shrink-0 ml-3" onClick={() => navigate('/dashboard/student/assignments')}>Submit</Button>
                 </div>
               ))}
             </Card>

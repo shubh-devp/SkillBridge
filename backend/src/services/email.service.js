@@ -38,7 +38,7 @@ const sendEmail = async (options) => {
 
   try {
     const info = await transport.sendMail({
-      from: `"EduServe" <${env.smtp.user}>`,
+      from: `"SkillBridge" <${env.smtp.user}>`,
       to,
       subject,
       html,
@@ -53,18 +53,18 @@ const sendEmail = async (options) => {
 const sendWelcomeEmail = async (user) => {
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <h2 style="color: #4F46E5;">Welcome to EduServe!</h2>
+      <h2 style="color: #4F46E5;">Welcome to SkillBridge!</h2>
       <p>Hi ${user.name},</p>
-      <p>Thank you for joining EduServe. We're excited to help you on your learning journey.</p>
+      <p>Thank you for joining SkillBridge. We're excited to help you on your learning journey.</p>
       <p>Start exploring courses and take the first step toward your goals.</p>
       <br/>
-      <p>Best regards,<br/>The EduServe Team</p>
+      <p>Best regards,<br/>The SkillBridge Team</p>
     </div>
   `;
 
   await sendEmail({
     to: user.email,
-    subject: 'Welcome to EduServe!',
+    subject: 'Welcome to SkillBridge!',
     html,
   });
 };
@@ -83,13 +83,13 @@ const sendPasswordResetEmail = async (user, resetUrl) => {
       </p>
       <p>If you did not request this, please ignore this email.</p>
       <br/>
-      <p>Best regards,<br/>The EduServe Team</p>
+      <p>Best regards,<br/>The SkillBridge Team</p>
     </div>
   `;
 
   await sendEmail({
     to: user.email,
-    subject: 'Password Reset - EduServe',
+    subject: 'Password Reset - SkillBridge',
     html,
   });
 };
@@ -102,7 +102,7 @@ const sendEnrollmentConfirmation = async (user, course) => {
       <p>You have successfully enrolled in <strong>${course.title}</strong>.</p>
       <p>Get started with your learning journey now.</p>
       <br/>
-      <p>Best regards,<br/>The EduServe Team</p>
+      <p>Best regards,<br/>The SkillBridge Team</p>
     </div>
   `;
 

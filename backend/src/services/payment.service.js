@@ -1,3 +1,12 @@
+/*
+ * Payment Service (Razorpay)
+ *
+ * NOTE: This service is fully implemented but is NOT yet wired into any controller or route.
+ * It is intended for a future checkout flow (course purchase / enrollment payment).
+ * Until that feature is active, do not import or use this module in any route handler.
+ * Once wired, remember to configure RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in the environment.
+ */
+
 const crypto = require('crypto');
 const env = require('../config/env');
 const logger = require('../utils/logger');

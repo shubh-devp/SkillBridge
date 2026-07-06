@@ -13,13 +13,13 @@ import { cn } from '@/lib/utils';
 
 const users = [
   { id: 1, name: 'Rohit Sharma', email: 'rohit.sharma@example.com', role: 'student', status: 'active', joined: '1 Jul 2026', courses: 4, initials: 'RS' },
-  { id: 2, name: 'Dr. Vikram Rathore', email: 'vikram.rathore@eduserve.in', role: 'teacher', status: 'active', joined: '28 Jun 2026', courses: 3, initials: 'VR' },
+  { id: 2, name: 'Dr. Vikram Rathore', email: 'vikram.rathore@skillbridge.in', role: 'teacher', status: 'active', joined: '28 Jun 2026', courses: 3, initials: 'VR' },
   { id: 3, name: 'Priya Mehta', email: 'priya.mehta@example.com', role: 'student', status: 'active', joined: '25 Jun 2026', courses: 2, initials: 'PM' },
   { id: 4, name: 'Ananya Gupta', email: 'ananya.gupta@example.com', role: 'student', status: 'inactive', joined: '20 Jun 2026', courses: 1, initials: 'AG' },
-  { id: 5, name: 'Prof. Sunita Mehta', email: 'sunita.mehta@eduserve.in', role: 'teacher', status: 'active', joined: '15 Jun 2026', courses: 2, initials: 'SM' },
-  { id: 6, name: 'Amit Verma', email: 'amit.verma@eduserve.in', role: 'admin', status: 'active', joined: '10 Jun 2026', courses: 0, initials: 'AV' },
+  { id: 5, name: 'Prof. Sunita Mehta', email: 'sunita.mehta@skillbridge.in', role: 'teacher', status: 'active', joined: '15 Jun 2026', courses: 2, initials: 'SM' },
+  { id: 6, name: 'Amit Verma', email: 'amit.verma@skillbridge.in', role: 'admin', status: 'active', joined: '10 Jun 2026', courses: 0, initials: 'AV' },
   { id: 7, name: 'Neha Kapoor', email: 'neha.kapoor@example.com', role: 'student', status: 'active', joined: '8 Jun 2026', courses: 3, initials: 'NK' },
-  { id: 8, name: 'Dr. Rajesh Kumar', email: 'rajesh.kumar@eduserve.in', role: 'teacher', status: 'active', joined: '5 Jun 2026', courses: 5, initials: 'RK' },
+  { id: 8, name: 'Dr. Rajesh Kumar', email: 'rajesh.kumar@skillbridge.in', role: 'teacher', status: 'active', joined: '5 Jun 2026', courses: 5, initials: 'RK' },
 ];
 
 const roleBadge = { student: 'default', teacher: 'accent', admin: 'success' };

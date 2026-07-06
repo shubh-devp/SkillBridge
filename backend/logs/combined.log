@@ -23,3 +23,7 @@
 {"level":"info","message":"API Documentation: http://localhost:5000/api-docs","service":"eduserve-api","timestamp":"2026-07-03 15:31:23"}
 {"level":"info","message":"Health Check: http://localhost:5000/api/health","service":"eduserve-api","timestamp":"2026-07-03 15:31:23"}
 {"level":"info","message":"MongoDB connected: localhost","service":"eduserve-api","timestamp":"2026-07-03 15:31:23"}
+{"level":"info","message":"SkillBridge API server running on port 5000 in development mode","service":"eduserve-api","timestamp":"2026-07-06 11:13:27"}
+{"level":"info","message":"API Documentation: http://localhost:5000/api-docs","service":"eduserve-api","timestamp":"2026-07-06 11:13:27"}
+{"level":"info","message":"Health Check: http://localhost:5000/api/health","service":"eduserve-api","timestamp":"2026-07-06 11:13:27"}
+{"level":"info","message":"MongoDB connected: localhost","service":"eduserve-api","timestamp":"2026-07-06 11:13:27"}
